@@ -1,6 +1,23 @@
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { MapContainer, ImageOverlay, Marker, Popup, useMapEvents, Polyline } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import "./AdminMapeditor.css";
+
+function MapClickHandler({ setClickPos }) {
+  useMapEvents({
+    click(e) {
+      // Map Leaflet [lat, lng] to original percentage [y, x] with origin at top-left
+      // Make sure values stay between 0 and 100
+      let x = Math.max(0, Math.min(100, e.latlng.lng));
+      let y = Math.max(0, Math.min(100, 100 - e.latlng.lat));
+      setClickPos({ x, y });
+    },
+  });
+  return null;
+}
 
 function AdminMapEditor() {
   const { eventId } = useParams();
@@ -14,7 +31,7 @@ function AdminMapEditor() {
   const [stallName, setStallName] = useState("");
   const [stallType, setStallType] = useState("stall");
 
-  // 🧪 DEBUG (very helpful)
+  // 🧪 DEBUG
   useEffect(() => {
     console.log("EVENT ID:", eventId);
     console.log("LAYOUT IMAGE:", layoutImage);
@@ -23,25 +40,22 @@ function AdminMapEditor() {
   // 🎨 icons
   const getIcon = (type) => {
     const map = {
-      stall: "🛍️",
-      stage: "🎤",
-      restroom: "🚻",
-      food: "🍔",
-      entry: "🚪",
-      exit: "🏁",
-      help: "🧭",
+      "stall": "🛍️",
+      "stage": "🎤",
+      "restroom": "🚻",
+      "food": "🍔",
+      "entry": "🚪",
+      "exit": "🏁",
+      "help": "🧭",
+      "pointer": "📍"
     };
-    return map[type] || "📍";
-  };
-
-  // ✅ click handler (percentage based)
-  const handleMapClick = (e) => {
-    const rect = e.target.getBoundingClientRect();
-
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-    setClickPos({ x, y });
+    const emoji = map[type] || "📍";
+    return L.divIcon({
+      className: "custom-emoji-icon",
+      html: `<div style="font-size: 28px; text-shadow: 0 4px 8px rgba(0,0,0,0.8); text-align: center;">${emoji}</div>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 18], // Center the icon
+    });
   };
 
   // ✅ save stall
@@ -84,59 +98,102 @@ function AdminMapEditor() {
     );
   }
 
-  return (
-    <div style={{ display: "flex", gap: "20px", padding: "20px" }}>
-      {/* 🗺️ MAP */}
-      <div
-        style={{
-          position: "relative",
-          border: "2px solid #ccc",
-        }}
-      >
-        <img
-          src={`http://localhost:5000/${layoutImage}`}
-          alt="layout"
-          onClick={handleMapClick}
-          style={{
-            width: "800px",
-            cursor: "crosshair",
-            display: "block",
-          }}
-        />
+  const formatImageUrl = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http")) return path;
+    return `http://localhost:5000/${path.replace(/\\/g, "/")}`;
+  };
 
-        {/* 🔴 markers */}
-        {stalls.map((s, i) => (
-          <div
-            key={i}
-            title={s.name}
-            style={{
-              position: "absolute",
-              left: `${s.x}%`,
-              top: `${s.y}%`,
-              transform: "translate(-50%, -50%)",
-              fontSize: "24px",
-            }}
-          >
-            {getIcon(s.type)}
-          </div>
-        ))}
+  const mapBounds = [[0, 0], [100, 100]];
+  const imageUrl = formatImageUrl(layoutImage);
+
+  // 🟦 Draw Grid Overlay
+  const renderGrid = () => {
+    const lines = [];
+    const spacing = 10; // Every 10%
+    // Note: Leaflet CRS.Simple uses [y, x] for positions on standard Cartesian, mapped here to [100-y, x] typically for ImageOverlay, 
+    // but our image overlay is from [0,0] to [100,100]. 
+
+    // Vertical lines
+    for (let i = 0; i <= 100; i += spacing) {
+      lines.push(
+        <Polyline
+          key={`v-${i}`}
+          positions={[[0, i], [100, i]]}
+          color="rgba(148, 163, 184, 0.4)" // lighter color for dark bg
+          weight={1.5}
+          dashArray="4, 4"
+        />
+      );
+    }
+
+    // Horizontal lines
+    for (let i = 0; i <= 100; i += spacing) {
+      lines.push(
+        <Polyline
+          key={`h-${i}`}
+          positions={[[i, 0], [i, 100]]}
+          color="rgba(148, 163, 184, 0.4)" // lighter color for dark bg
+          weight={1.5}
+          dashArray="4, 4"
+        />
+      );
+    }
+    return lines;
+  };
+
+  return (
+    <div className="map-editor-container">
+      {/* 🗺️ MAP */}
+      <div className="map-editor-wrapper">
+        <MapContainer
+          center={[50, 50]}
+          zoom={2}
+          crs={L.CRS.Simple}
+          minZoom={0}
+          maxZoom={4}
+          style={{ height: "100%", width: "100%", backgroundColor: "transparent" }}
+          bounds={mapBounds}
+          maxBounds={[[ -20, -20 ], [ 120, 120 ]]} // Allow some dragging outside but bounce back
+        >
+          <ImageOverlay url={imageUrl} bounds={mapBounds} />
+          {renderGrid()}
+          <MapClickHandler setClickPos={setClickPos} />
+
+          {/* 🔴 saved markers */}
+          {stalls.map((s, i) => (
+            <Marker key={i} position={[100 - s.y, s.x]} icon={getIcon(s.type)}>
+              <Popup>
+                <strong>{s.name}</strong> <br /> 
+                <span style={{ textTransform: "capitalize" }}>{s.type}</span>
+              </Popup>
+            </Marker>
+          ))}
+
+          {/* 🟢 temporary click marker */}
+          {clickPos && (
+            <Marker position={[100 - clickPos.y, clickPos.x]} icon={getIcon("pointer")}>
+              <Popup>New Element Here</Popup>
+            </Marker>
+          )}
+        </MapContainer>
       </div>
 
       {/* 🎛️ SIDE PANEL */}
-      <div style={{ width: "250px" }}>
-        <h3>Add Element</h3>
+      <div className="map-sidebar">
+        <h3>Design Venue</h3>
 
         <input
-          placeholder="Name"
+          placeholder="Element Name"
           value={stallName}
           onChange={(e) => setStallName(e.target.value)}
-          style={{ width: "100%", marginBottom: "10px" }}
+          className="map-input"
         />
 
         <select
           value={stallType}
           onChange={(e) => setStallType(e.target.value)}
-          style={{ width: "100%", marginBottom: "10px" }}
+          className="map-select"
         >
           <option value="stall">🛍️ Stall</option>
           <option value="stage">🎤 Stage</option>
@@ -147,14 +204,21 @@ function AdminMapEditor() {
           <option value="help">🧭 Help Desk</option>
         </select>
 
-        <button onClick={addStall} style={{ width: "100%" }}>
-          Add to Map
+        <button 
+          onClick={addStall} 
+          className="map-save-btn"
+        >
+          Save to Map
         </button>
 
-        {clickPos && (
-          <p style={{ fontSize: "12px", marginTop: "10px" }}>
-            ✅ Position selected
-          </p>
+        {clickPos ? (
+          <div className="status-box status-success">
+            ✅ Highlighted location perfectly captured! Start typing the name and save this element.
+          </div>
+        ) : (
+          <div className="status-box status-info">
+            👉 Tap precisely where you want to drop a new venue element on your interactive canvas.
+          </div>
         )}
       </div>
     </div>

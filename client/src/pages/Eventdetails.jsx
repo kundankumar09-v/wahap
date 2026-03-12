@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import VenueMap from "../components/VenueMap";
 
 function EventDetails() {
   const { id } = useParams();
@@ -19,6 +20,12 @@ function EventDetails() {
   }, [id]);
 
   if (!event) return <div>Loading...</div>;
+  
+  const formatImageUrl = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http")) return path;
+    return `http://localhost:5000/${path.replace(/\\/g, "/")}`;
+  };
 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
@@ -27,15 +34,15 @@ function EventDetails() {
       </Link>
 
       <img
-        src={`http://localhost:5000/${event.eventImage}`}
-        alt={event.name}
-        style={{ width: "100%", maxHeight: "400px", objectFit: "cover", borderRadius: "10px" }}
+        src={formatImageUrl(event.eventImage || event.bannerImage || event.venueLayoutImage)}
+        alt={event.name || event.title}
+        style={{ width: "100%", maxHeight: "400px", objectFit: "cover", borderRadius: "20px", boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
       />
 
-      <h1>{event.name}</h1>
-      <p><strong>Type:</strong> {event.type}</p>
-      <p><strong>City:</strong> {event.city}</p>
-      <p><strong>Address:</strong> {event.address}</p>
+      <h1 style={{ fontSize: '36px', marginTop: '20px' }}>{event.name || event.title}</h1>
+      <p><strong>Type:</strong> {event.type || "N/A"}</p>
+      <p><strong>City:</strong> {event.city || event.location || "N/A"}</p>
+      <p><strong>Address:</strong> {event.address || "N/A"}</p>
       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
       <p><strong>Duration:</strong> {event.duration}</p>
       <p><strong>Age Limit:</strong> {event.ageLimit}</p>
@@ -43,15 +50,17 @@ function EventDetails() {
       <p><strong>Language:</strong> {event.language}</p>
       
       <h3>About Event</h3>
-      <p>{event.aboutEvent}</p>
+      <p>{event.aboutEvent || event.description || "No description provided."}</p>
 
-      {event.layoutImage && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Venue Map</h3>
-          <img
-            src={`http://localhost:5000/${event.layoutImage}`}
-            alt="venue map"
-            style={{ width: "100%", maxWidth: "600px", border: "1px solid #ddd" }}
+      {(event.layoutImage || event.venueLayoutImage) && (
+        <div style={{ marginTop: "40px" }}>
+          <h3 style={{ marginBottom: "20px" }}>Interactive Venue Map</h3>
+          <p style={{ color: "#64748b", marginBottom: "15px", fontSize: "14px" }}>
+            Explore the venue and click on stalls to view details or mark your visit.
+          </p>
+          <VenueMap 
+            eventId={event._id} 
+            layoutImage={formatImageUrl(event.layoutImage || event.venueLayoutImage)} 
           />
         </div>
       )}

@@ -62,7 +62,7 @@ function EventList() {
           >
 
             <img
-              src={`http://localhost:5000/${event.eventImage}`}
+              src={`http://localhost:5000/${event.eventImage?.replace(/\\/g, "/")}`}
               alt={event.name}
               className="card-img"
             />

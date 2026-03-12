@@ -1,0 +1,124 @@
+.map-editor-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 40px);
+  background: #0f172a; /* dark slate background */
+  font-family: 'Inter', sans-serif;
+  color: #f8fafc;
+}
+
+.map-editor-wrapper {
+  flex: 1;
+  position: relative;
+  background: #1e293b;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-sidebar {
+  width: 320px;
+  padding: 24px;
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.map-sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.map-input, .map-select {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+  color: #f8fafc;
+  font-size: 15px;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.map-select option {
+  background: #1e293b;
+  color: #f8fafc;
+}
+
+.map-input:focus, .map-select:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.map-save-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.map-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(14, 165, 233, 0.4);
+}
+
+.map-save-btn:active {
+  transform: translateY(0);
+}
+
+.status-box {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.status-success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-info {
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhancing Leaflet visual elements slightly */
+.leaflet-container {
+  background: transparent !important;
+}
+
+.custom-emoji-icon {
+  filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5));
+  transition: transform 0.2s;
+}
+
+.custom-emoji-icon:hover {
+  transform: scale(1.2);
+}

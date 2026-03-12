@@ -20,6 +20,8 @@ app.get("/", (req, res) => {
   res.send("WAHAP API Running");
 });
 const stallRoutes = require("./routes/stallRoutes");
+const visitRoutes = require("./routes/visitRoutes");
 app.use("/api/stalls", stallRoutes);
+app.use("/api/visits", visitRoutes);
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
