@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap");
+
+.manager-page {
+  min-height: 100vh;
+  padding: 24px 18px 40px;
+  font-family: "Outfit", sans-serif;
+  background: linear-gradient(180deg, #fff8ef 0%, #f2f6ff 100%);
+}
+
+.manager-head,
+.manager-note,
+.manager-form,
+.manager-list,
+.manager-footer-actions,
+.manager-message {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.manager-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.manager-head h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+  letter-spacing: -0.02em;
+}
+
+.manager-back-link {
+  text-decoration: none;
+  border: 1px solid #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: #0f172a;
+  background: #ffffff;
+}
+
+.manager-note {
+  margin-top: 8px;
+  color: #475569;
+}
+
+.manager-form {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+}
+
+.manager-form input {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-family: inherit;
+}
+
+.manager-form button,
+.manager-footer-actions button,
+.manager-actions button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.manager-form button {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.manager-message {
+  margin-top: 10px;
+  color: #0f766e;
+  font-weight: 600;
+}
+
+.manager-list {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.manager-card {
+  border: 1px solid #d6dbe5;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+.manager-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.manager-card-body {
+  padding: 12px;
+}
+
+.manager-card-body h3 {
+  margin: 0;
+}
+
+.manager-card-body p {
+  margin: 6px 0 0;
+  color: #475569;
+}
+
+.manager-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.manager-actions button {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.manager-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.manager-actions .danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.manager-footer-actions {
+  margin-top: 14px;
+}
+
+.manager-footer-actions button {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+}
+
+@media (max-width: 900px) {
+  .manager-form {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-card {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-card img {
+    max-height: 210px;
+  }
+}

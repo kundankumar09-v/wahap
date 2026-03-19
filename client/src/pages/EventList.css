@@ -1,0 +1,84 @@
+.event-page{
+padding:20px;
+font-family:Arial;
+}
+
+.filters{
+margin-bottom:20px;
+display:flex;
+gap:10px;
+}
+
+.filters select{
+padding:8px;
+border-radius:6px;
+border:1px solid #ddd;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+border-radius:14px;
+overflow:hidden;
+cursor:pointer;
+transition:0.2s;
+background:transparent;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.card-img{
+width:100%;
+height:100%;
+object-fit:cover;
+background:#0f172a;
+display:block;
+}
+
+.event-poster-wrap{
+position:relative;
+width:100%;
+height:320px;
+border-radius:14px;
+overflow:hidden;
+background:#0f172a;
+box-shadow:0 14px 24px rgba(15,23,42,0.18);
+}
+
+.event-bottom-strip{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.88);
+color:#fff;
+padding:9px 11px;
+font-size:13px;
+font-weight:700;
+letter-spacing:0.01em;
+}
+
+.card-info{
+padding:10px 4px 0;
+}
+
+.card-info h4{
+margin:0;
+font-size:16px;
+font-weight:700;
+color:#172033;
+line-height:1.3;
+}
+
+.city{
+margin:5px 0 0;
+color:#64748b;
+font-size:13px;
+font-weight:500;
+}
