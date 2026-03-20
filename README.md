@@ -1,4 +1,4 @@
-# IOMP - Event & Venue Management System
+# WAHAAP - Event & Venue Management System
 
 IOMP is a comprehensive platform designed to streamline event planning and attendee navigation. It provides a robust set of tools for event organizers to create layouts and for attendees to explore venues seamlessly.
 
