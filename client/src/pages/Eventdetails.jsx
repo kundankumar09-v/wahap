@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaArrowLeft, FaClock, FaCalendarAlt, FaUsers, FaGlobe, FaMapMarkerAlt, FaTag, FaHourglass } from "react-icons/fa";
+import { FaArrowLeft, FaClock, FaCalendarAlt, FaUsers, FaGlobe, FaMapMarkerAlt, FaTag, FaHourglass, FaQrcode } from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
+import { QRCodeCanvas } from "qrcode.react";
 import API_URL from "../config";
 import "./Eventdetails.css";
 import Footer from "../components/Footer";
@@ -13,6 +14,7 @@ function EventDetails() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
+  const [showQR, setShowQR] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -89,32 +91,25 @@ function EventDetails() {
 
   return (
     <div className="event-details-page">
-      {/* Back Button */}
       <button onClick={() => navigate(-1)} className="back-link">
         <FaArrowLeft /> Back
       </button>
 
-      {/* Main Content */}
       <div className="details-container">
-        {/* Left Column: Image and Description */}
         <div className="details-left">
-          {/* Event Name */}
           <h1 className="event-name">{event.name}</h1>
 
-          {/* Banner Image */}
           {bannerImg && (
             <div className="event-banner">
               <img src={bannerImg} alt={event.name} className="banner-img" />
             </div>
           )}
 
-          {/* Event Tags */}
           <div className="event-tags">
             <span className="tag">{event.type || "Event"}</span>
             {event.city && <span className="tag">{event.city}</span>}
           </div>
 
-          {/* About Section */}
           <div className="about-section">
             <h3 className="section-title">About the Event</h3>
             <p className={`about-text ${expanded ? "expanded" : ""}`}>
@@ -131,12 +126,9 @@ function EventDetails() {
           </div>
         </div>
 
-        {/* Right Column: Event Details Card */}
         <div className="details-right">
           <div className="details-card">
-            {/* Details Grid */}
             <div className="details-grid">
-              {/* Date */}
               <div className="detail-item">
                 <div className="detail-icon">
                   <FaCalendarAlt />
@@ -147,7 +139,6 @@ function EventDetails() {
                 </div>
               </div>
 
-              {/* Start Time */}
               {event.startTime && (
                 <div className="detail-item">
                   <div className="detail-icon">
@@ -160,7 +151,6 @@ function EventDetails() {
                 </div>
               )}
 
-              {/* Duration */}
               {event.duration && (
                 <div className="detail-item">
                   <div className="detail-icon">
@@ -173,7 +163,6 @@ function EventDetails() {
                 </div>
               )}
 
-              {/* Age Limit */}
               {event.ageLimit && (
                 <div className="detail-item">
                   <div className="detail-icon">
@@ -186,7 +175,6 @@ function EventDetails() {
                 </div>
               )}
 
-              {/* Language */}
               {event.language && (
                 <div className="detail-item">
                   <div className="detail-icon">
@@ -199,7 +187,6 @@ function EventDetails() {
                 </div>
               )}
 
-              {/* Event Type */}
               <div className="detail-item">
                 <div className="detail-icon">
                   <FaTag />
@@ -210,7 +197,6 @@ function EventDetails() {
                 </div>
               </div>
 
-              {/* Location */}
               <div className="detail-item">
                 <div className="detail-icon">
                   <FaMapMarkerAlt />
@@ -226,7 +212,6 @@ function EventDetails() {
                 </div>
               </div>
 
-              {/* Ticket Type */}
               {event.ticketType && (
                 <div className="detail-item">
                   <div className="detail-icon">
@@ -239,11 +224,26 @@ function EventDetails() {
                 </div>
               )}
             </div>
+
+            <div className="qr-reveal-section" style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px', textAlign: 'center' }}>
+                <button 
+                  onClick={() => setShowQR(!showQR)}
+                  style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', margin: '0 auto', fontSize: '14px', fontWeight: '600' }}
+                >
+                  <FaQrcode /> {showQR ? "Hide Event QR" : "Generate Event QR"}
+                </button>
+                
+                {showQR && (
+                  <div style={{ marginTop: '15px', background: 'white', padding: '15px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', display: 'inline-block' }}>
+                    <QRCodeCanvas value={id} size={160} level="H" includeMargin={true} />
+                    <p style={{ fontSize: '12px', color: '#64748b', marginTop: '10px' }}>Scan this code to enter the event</p>
+                  </div>
+                )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
