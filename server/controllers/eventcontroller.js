@@ -65,7 +65,16 @@ exports.getEvents = async (req, res) => {
     }
     
     if (type) filter.type = type.toLowerCase().trim();
-    if (query) filter.name = { $regex: query.trim(), $options: "i" };
+    
+    if (query) {
+      const searchTerm = query.trim();
+      filter.$or = [
+        { name: { $regex: searchTerm, $options: "i" } },
+        { type: { $regex: searchTerm, $options: "i" } },
+        { aboutEvent: { $regex: searchTerm, $options: "i" } },
+        { address: { $regex: searchTerm, $options: "i" } }
+      ];
+    }
 
     const events = await Event.find(filter).sort({ createdAt: -1 });
 

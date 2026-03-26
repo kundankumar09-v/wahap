@@ -60,8 +60,11 @@ function Footer() {
               <span>India</span>
             </li>
           </ul>
+        </div>
 
-          <h4 className="footer-heading" style={{ marginTop: '16px' }}>Follow Us</h4>
+        {/* Follow Us */}
+        <div className="footer-section">
+          <h4 className="footer-heading">Follow Us</h4>
           <ul className="footer-social">
             <li>
               <a href="https://instagram.com/wahap_official" target="_blank" rel="noopener noreferrer">

@@ -49,18 +49,18 @@ function EventList() {
     if (Number.isNaN(start.getTime())) return "TBA";
 
     const startStr = start.toLocaleDateString("en-IN", {
-      day: "numeric",
+      weekday: "short",
       month: "short",
-      year: "numeric",
-    });
+      day: "numeric",
+    }).replace(/,/g, '');
 
     if (!endDate) {
-      return `${startStr} onwards`;
+      return startStr;
     }
 
     const end = new Date(endDate);
     if (Number.isNaN(end.getTime())) {
-      return `${startStr} onwards`;
+      return startStr;
     }
 
     if (startDate === endDate || start.getTime() === end.getTime()) {
@@ -73,70 +73,6 @@ function EventList() {
   return (
     <div className="event-page">
       {loading && <div className="loading-overlay">✨ Discovering nearby events...</div>}
-
-      <h2>Explore Events</h2>
-      {search && (
-        <div className="search-status" style={{ marginBottom: '20px', color: '#64748b' }}>
-          Showing results for "<strong>{search}</strong>"
-          <button
-            onClick={() => {
-              const newParams = new URLSearchParams(params);
-              newParams.delete("query");
-              navigate(`?${newParams.toString()}`);
-            }}
-            style={{ marginLeft: '10px', background: 'none', border: 'none', color: '#ff0844', cursor: 'pointer', textDecoration: 'underline' }}
-          >
-            Clear search
-          </button>
-        </div>
-      )}
-
-      {/* Filters */}
-      <div className="filters">
-
-        <select
-          value={city}
-          onChange={(e) => {
-            const newCity = e.target.value;
-            const newParams = new URLSearchParams(params);
-            if (newCity && newCity !== "All") {
-              newParams.set("city", newCity);
-            } else {
-              newParams.delete("city");
-            }
-            navigate(`?${newParams.toString()}`);
-          }}
-        >
-          <option value="">All Cities</option>
-          <option value="Hyderabad">Hyderabad</option>
-          <option value="Mumbai">Mumbai</option>
-          <option value="Delhi">Delhi</option>
-          <option value="Bangalore">Bangalore</option>
-          <option value="LB Nagar">LB Nagar</option>
-        </select>
-
-        <select
-          value={type}
-          onChange={(e) => {
-            const newType = e.target.value;
-            const newParams = new URLSearchParams(params);
-            if (newType) {
-              newParams.set("type", newType);
-            } else {
-              newParams.delete("type");
-            }
-            navigate(`?${newParams.toString()}`);
-          }}
-        >
-          <option value="">All Types</option>
-          {EVENT_TYPES.map((typeItem) => (
-            <option key={typeItem.value} value={typeItem.value}>
-              {typeItem.label}
-            </option>
-          ))}
-        </select>
-
-      </div>
 
       {/* Cards */}
       <div className="cards">

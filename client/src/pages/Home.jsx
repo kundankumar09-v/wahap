@@ -191,56 +191,53 @@ function Home() {
 
       {/* BANNERS */}
       <section className="hero-banner-section">
-        <div className="carousel-container">
-          <div className="carousel-track" style={{ transform: `translateX(-${heroIndex * 100}%)` }}>
-            {heroBanners.map((banner, idx) => (
-              <div key={banner._id || banner.id || idx} className="carousel-item">
-                <img src={banner.image} alt={banner.alt || "Event Banner"} className="hero-img" />
-              </div>
-            ))}
+        <div className="hero-inner">
+          <div className="carousel-container">
+            <div className="carousel-track" style={{ transform: `translateX(-${heroIndex * 100}%)` }}>
+              {heroBanners.map((banner, idx) => (
+                <div key={banner._id || banner.id || idx} className="carousel-item">
+                  <img src={banner.image} alt={banner.alt || "Event Banner"} className="hero-img" />
+                </div>
+              ))}
+            </div>
+
+            {heroBanners.length > 1 && (
+              <>
+                <button
+                  className="carousel-btn prev"
+                  onClick={() => setHeroIndex((heroIndex - 1 + heroBanners.length) % heroBanners.length)}
+                  aria-label="Previous Banner"
+                >
+                  <FaChevronLeft />
+                </button>
+                <button
+                  className="carousel-btn next"
+                  onClick={() => setHeroIndex((heroIndex + 1) % heroBanners.length)}
+                  aria-label="Next Banner"
+                >
+                  <FaChevronRight />
+                </button>
+
+                <div className="carousel-pagination">
+                  {heroBanners.map((_, idx) => (
+                    <button
+                      key={idx}
+                      className={`nav-dot ${heroIndex === idx ? 'active' : ''}`}
+                      onClick={() => setHeroIndex(idx)}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
-
-          {heroBanners.length > 1 && (
-            <>
-              <button
-                className="carousel-btn prev"
-                onClick={() => setHeroIndex((heroIndex - 1 + heroBanners.length) % heroBanners.length)}
-                aria-label="Previous Banner"
-              >
-                <FaChevronLeft />
-              </button>
-              <button
-                className="carousel-btn next"
-                onClick={() => setHeroIndex((heroIndex + 1) % heroBanners.length)}
-                aria-label="Next Banner"
-              >
-                <FaChevronRight />
-              </button>
-
-              <div className="carousel-pagination">
-                {heroBanners.map((_, idx) => (
-                  <button
-                    key={idx}
-                    className={`nav-dot ${heroIndex === idx ? 'active' : ''}`}
-                    onClick={() => setHeroIndex(idx)}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
         </div>
       </section>
 
 
 
 
-      <div className="section-meta">
-        <h2 className="section-title">Explore by Event Type</h2>
-        <p>
-          Showing {rankedEvents.length} event{rankedEvents.length === 1 ? "" : "s"} across curated sections
-        </p>
-      </div>
+     
 
       {groupedEvents.length === 0 ? (
         <div className="empty-results">
