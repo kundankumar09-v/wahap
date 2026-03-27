@@ -6,6 +6,7 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [googleEmail, setGoogleEmail] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -50,13 +51,36 @@ function SignIn() {
     return null;
   };
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.toLowerCase(),
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Sign in failed");
+        setLoading(false);
+        return;
+      }
+
+      redirectAfterLogin(data.user.name, data.user.email, null);
+    } catch (err) {
+      setError("Error connecting to server. Please try again.");
       setLoading(false);
-      redirectAfterLogin(extractName(email), email.trim().toLowerCase(), null);
-    }, 1500);
+      console.error("Signin error:", err);
+    }
   };
 
   const handleGoogleEmailChange = (e) => {
@@ -110,6 +134,20 @@ function SignIn() {
             <span>OR</span>
             <div className="divider-line"></div>
           </div>
+
+          {error && (
+            <div style={{
+              backgroundColor: "#fee",
+              color: "#c33",
+              padding: "12px",
+              borderRadius: "4px",
+              marginBottom: "16px",
+              fontSize: "14px",
+              border: "1px solid #fcc"
+            }}>
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSignIn}>
             <div className="auth-input-group">

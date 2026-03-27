@@ -65,15 +65,15 @@ function EventDetails() {
 
   return (
     <div className="event-details-page">
-      <div className="details-header-strip">
-        <button onClick={() => navigate(-1)} className="back-link">
-          <FaArrowLeft /> Back
-        </button>
-        <h1 className="event-main-title">{event.name}</h1>
-      </div>
+      {/* Back Button */}
+      <button onClick={() => navigate(-1)} className="back-button">
+        <FaArrowLeft /> Back
+      </button>
 
-      <div className="details-main-layout">
-        <div className="layout-col-left">
+      {/* Main Layout: Image + Details Card */}
+      <div className="details-container">
+        {/* Left: Event Banner */}
+        <div className="event-banner-section">
           <div className="event-banner-carousel">
             <div className="carousel-inner" style={{ transform: `translateX(-${currentImgIndex * 100}%)` }}>
               {images.map((img, index) => (
@@ -95,84 +95,88 @@ function EventDetails() {
             )}
           </div>
 
+          {/* Tags below image */}
           <div className="event-tags">
             <span className="tag">{event.type || "Special Event"}</span>
             {event.city && <span className="tag">{event.city}</span>}
           </div>
         </div>
 
-        <div className="layout-col-right">
-          <div className="details-side-card">
-            <div className="details-grid">
+        {/* Right: Title + Details Card */}
+        <div className="details-card-section">
+          {/* Event Title (No Box) */}
+          <h1 className="event-title-clean">{event.name}</h1>
+
+          {/* Compact Details Card */}
+          <div className="details-card">
+            <div className="details-rows">
               <div className="detail-row">
                 <FaCalendarAlt className="row-icon" />
-                <div className="row-info">
-                  <small>DATE</small>
-                  <span>{formatEventDate(event.date, event.endDate)}</span>
+                <div className="row-content">
+                  <small className="row-label">DATE</small>
+                  <span className="row-value">{formatEventDate(event.date, event.endDate)}</span>
                 </div>
               </div>
-              <div className="detail-row">
-                <FaClock className="row-icon" />
-                <div className="row-info">
-                  <small>DURATION</small>
-                  <span>{event.duration || "1h 30m"}</span>
-                </div>
-              </div>
-              <div className="detail-row">
-                <FaUsers className="row-icon" />
-                <div className="row-info">
-                  <small>AGE LIMIT</small>
-                  <span>{event.ageLimit ? `${event.ageLimit}+` : "All Ages"}</span>
-                </div>
-              </div>
-              <div className="detail-row">
-                <FaGlobe className="row-icon" />
-                <div className="row-info">
-                  <small>LANGUAGE</small>
-                  <span>{event.language || "English / Local"}</span>
-                </div>
-              </div>
+
               <div className="detail-row">
                 <FaTag className="row-icon" />
-                <div className="row-info">
-                  <small>EVENT TYPE</small>
-                  <span>{event.type || "N/A"}</span>
+                <div className="row-content">
+                  <small className="row-label">DURATION</small>
+                  <span className="row-value">{event.duration || "1h 30m"}</span>
                 </div>
               </div>
+
               <div className="detail-row">
-                <FaMapMarkerAlt className="row-icon" />
-                <div className="row-info">
-                  <small>LOCATION</small>
-                  <span>{event.city}</span>
-                  {event.address && <p className="row-address">{event.address}</p>}
+                <FaUsers className="row-icon" />
+                <div className="row-content">
+                  <small className="row-label">AGE LIMIT</small>
+                  <span className="row-value">{event.ageLimit ? `${event.ageLimit}+` : "All Ages"}</span>
                 </div>
               </div>
+
+              <div className="detail-row">
+                <FaGlobe className="row-icon" />
+                <div className="row-content">
+                  <small className="row-label">LANGUAGE</small>
+                  <span className="row-value">{event.language || "English / Local"}</span>
+                </div>
+              </div>
+
               <div className="detail-row">
                 <MdLocalOffer className="row-icon" />
-                <div className="row-info">
-                  <small>TICKET TYPE</small>
-                  <span>{event.ticketType || "General Admission"}</span>
+                <div className="row-content">
+                  <small className="row-label">TYPE</small>
+                  <span className="row-value">{event.type || "N/A"}</span>
+                </div>
+              </div>
+
+              <div className="detail-row">
+                <FaMapMarkerAlt className="row-icon" />
+                <div className="row-content">
+                  <small className="row-label">LOCATION</small>
+                  <span className="row-value">{event.city}</span>
+                  {event.address && <p className="location-address">{event.address}</p>}
                 </div>
               </div>
             </div>
 
-            <div className="sidebar-qr-section">
+            {/* QR Code Section (Minimal) */}
+            <div className="qr-section">
               {localStorage.getItem("wahap_temp_user") ? (
                 <>
-                  <button onClick={() => setShowQR(!showQR)} className="qr-reveal-btn">
-                    <FaQrcode /> {showQR ? "Hide Entry Pass" : "Entry QR Code"}
+                  <button onClick={() => setShowQR(!showQR)} className="qr-button">
+                    <FaQrcode /> {showQR ? "Hide QR" : "Entry QR"}
                   </button>
                   {showQR && (
-                    <div className="qr-box-inner">
-                      <QRCodeCanvas value={id} size={150} level="H" includeMargin={true} />
-                      <p>Valid entry pass for this event</p>
+                    <div className="qr-display">
+                      <QRCodeCanvas value={id} size={120} level="H" includeMargin={true} />
                     </div>
                   )}
                 </>
               ) : (
-                <div className="qr-signin-prompt">
-                  <FaSignInAlt className="icon-small" />
-                  <Link to="/signin">Sign in</Link> to access entry QR code
+                <div className="qr-signin">
+                  <FaSignInAlt className="icon-qr" />
+                  <Link to="/signin">Sign in for QR</Link>
                 </div>
               )}
             </div>

@@ -5,6 +5,7 @@ const eventRoutes = require("./routes/eventRoutes");
 const stallRoutes = require("./routes/stallRoutes");
 const visitRoutes = require("./routes/visitRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use("/uploads", express.static("uploads"));
 
 connectDB();
 
+app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/stalls", stallRoutes);
 app.use("/api/visits", visitRoutes);

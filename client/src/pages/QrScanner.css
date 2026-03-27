@@ -3,9 +3,9 @@
 /* ========================= QR SCANNER PAGE ========================= */
 .qr-page {
   min-height: 100vh;
-  background: #080b12;
+  background: #ffffff;
   font-family: "Outfit", sans-serif;
-  color: #f1f5f9;
+  color: #333333;
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -120,11 +120,11 @@
   transform: translate(-50%, -50%);
   width: min(55vw, 260px);
   height: min(55vw, 260px);
-  border: 2px solid rgba(255,255,255,0.8);
+  border: 2px solid rgba(0,0,0,0.3);
   border-radius: 20px;
   box-shadow:
-    0 0 0 2000px rgba(8, 11, 18, 0.65),
-    inset 0 0 0 1px rgba(255,255,255,0.5);
+    0 0 0 2000px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(0,0,0,0.2);
   pointer-events: none;
   z-index: 2;
 }
