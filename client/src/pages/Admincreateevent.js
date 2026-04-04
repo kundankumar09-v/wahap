@@ -156,6 +156,4 @@ function AdminCreateEvent() {
       </div>
     </div>
   );
-}
-
-export default AdminCreateEvent;
+}export default AdminCreateEvent;
