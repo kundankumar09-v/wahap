@@ -128,10 +128,116 @@ button {
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  :root {
+    --page-max: 1200px;
+    --card-radius: 20px;
+  }
+
+  .page-wrapper {
+    padding: 0 36px;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --card-radius: 18px;
+  }
+
+  .page-wrapper {
+    padding: 0 28px;
+  }
+
+  body {
+    font-size: 15px;
+  }
+}
+
 @media (max-width: 768px) {
-  .page-wrapper { padding: 0 24px; }
+  :root {
+    --card-radius: 16px;
+  }
+
+  .page-wrapper {
+    padding: 0 20px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --card-radius: 14px;
+  }
+
+  .page-wrapper {
+    padding: 0 16px;
+  }
+
+  body {
+    font-size: 13px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--primary);
+    outline-offset: 2px;
+  }
 }
 
 @media (max-width: 480px) {
-  .page-wrapper { padding: 0 16px; }
+  :root {
+    --card-radius: 12px;
+  }
+
+  .page-wrapper {
+    padding: 0 12px;
+  }
+
+  body {
+    font-size: 12px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  button {
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .page-wrapper {
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--primary);
+    outline-offset: 1px;
+  }
 }

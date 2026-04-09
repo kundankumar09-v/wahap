@@ -467,6 +467,53 @@
   .details-card-section {
     position: static;
   }
+
+  .event-details-page {
+    padding: 32px 24px;
+  }
+
+  .event-banner-carousel {
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .event-details-page {
+    padding: 24px 20px;
+  }
+
+  .event-title-clean {
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+
+  .details-card {
+    padding: 20px;
+  }
+
+  .row-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .row-content h3 {
+    font-size: 14px;
+  }
+
+  .row-content p {
+    font-size: 12px;
+  }
+
+  .about-block,
+  .interactive-map-block {
+    padding: 24px;
+  }
+
+  .about-block h2 {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -476,60 +523,220 @@
 
   .back-button {
     margin-bottom: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
   }
 
   .event-banner-carousel {
     aspect-ratio: 4 / 5;
+    border-radius: 16px;
   }
 
   .event-title-clean {
     font-size: 24px;
+    margin-bottom: 14px;
   }
 
   .details-card {
     position: static;
+    padding: 18px;
+  }
+
+  .details-card-section {
+    position: static;
+  }
+
+  .row-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .row-content h3 {
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  .row-content p {
+    font-size: 11px;
   }
 
   .details-bottom-section {
-    margin-top: 40px;
+    margin-top: 32px;
     gap: 24px;
   }
 
   .about-block,
   .interactive-map-block {
-    padding: 24px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .about-block h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .about-block p {
+    font-size: 13px;
+  }
+
+  .about-block ul {
+    gap: 10px;
+  }
+
+  .about-block li {
+    font-size: 12px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .event-details-page {
-    padding: 16px;
+    padding: 16px 12px;
+  }
+
+  .back-button {
+    margin-bottom: 16px;
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+
+  .event-banner-carousel {
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
   }
 
   .event-title-clean {
-    font-size: 20px;
+    font-size: 22px;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
   }
 
   .details-card {
     padding: 16px;
+    gap: 14px;
   }
 
   .row-icon {
     width: 32px;
     height: 32px;
-    font-size: 14px;
+    font-size: 13px;
+    flex-shrink: 0;
   }
 
-  .row-value {
-    font-size: 13px;
+  .row-content h3 {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .row-content p {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .details-bottom-section {
+    margin-top: 24px;
+    gap: 20px;
   }
 
   .about-block,
   .interactive-map-block {
     padding: 16px;
+    border-radius: 14px;
   }
 
-  .block-title {
+  .about-block h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .about-block p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .about-block ul {
+    gap: 8px;
+  }
+
+  .about-block li {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-details-page {
+    padding: 12px 10px;
+  }
+
+  .back-button {
+    margin-bottom: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .event-banner-carousel {
+    aspect-ratio: 1 / 1.1;
+    border-radius: 12px;
+  }
+
+  .event-title-clean {
     font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .details-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .row-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .row-content h3 {
+    font-size: 11px;
+  }
+
+  .row-content p {
+    font-size: 9px;
+    line-height: 1.2;
+  }
+
+  .details-bottom-section {
+    margin-top: 20px;
+    gap: 16px;
+  }
+
+  .about-block,
+  .interactive-map-block {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .about-block h2 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .about-block p {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .about-block ul {
+    gap: 6px;
+  }
+
+  .about-block li {
+    font-size: 10px;
+  }
+
+  .more-reviews-btn {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 }

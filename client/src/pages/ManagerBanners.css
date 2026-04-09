@@ -216,9 +216,214 @@
   color: #333333;
 }
 
+@media (max-width: 1200px) {
+  .manager-page {
+    padding: 32px 28px;
+  }
+
+  .manager-title {
+    font-size: 30px;
+    margin-bottom: 28px;
+  }
+
+  .manager-form {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
 @media (max-width: 900px) {
-  .manager-form { grid-template-columns: 1fr; }
-  .manager-card { grid-template-columns: 1fr; }
-  .manager-card img { max-height: 210px; }
+  .manager-page {
+    padding: 24px 20px;
+  }
+
+  .manager-title {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+
+  .manager-form {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .manager-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .manager-card img {
+    max-height: 240px;
+    border-radius: 14px;
+  }
+
+  .manager-form-section h3 {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .manager-form-section input,
+  .manager-form-section textarea {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .manager-footer-actions button {
+    padding: 11px 20px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .manager-page {
+    padding: 20px 16px;
+  }
+
+  .manager-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .manager-form {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .manager-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .manager-card img {
+    max-height: 210px;
+    border-radius: 12px;
+  }
+
+  .manager-form-section {
+    margin-bottom: 16px;
+  }
+
+  .manager-form-section h3 {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .manager-form-section input,
+  .manager-form-section textarea {
+    padding: 11px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+
+  .manager-footer-actions {
+    margin-top: 20px;
+  }
+
+  .manager-footer-actions button {
+    padding: 10px 18px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .manager-page {
+    padding: 16px 12px;
+  }
+
+  .manager-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .manager-form {
+    gap: 14px;
+  }
+
+  .manager-card {
+    gap: 12px;
+  }
+
+  .manager-card img {
+    max-height: 180px;
+    border-radius: 10px;
+  }
+
+  .manager-form-section {
+    margin-bottom: 12px;
+  }
+
+  .manager-form-section h3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .manager-form-section input,
+  .manager-form-section textarea {
+    padding: 10px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .manager-footer-actions {
+    margin-top: 16px;
+  }
+
+  .manager-footer-actions button {
+    padding: 9px 16px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .manager-page {
+    padding: 12px 10px;
+  }
+
+  .manager-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .manager-form {
+    gap: 12px;
+  }
+
+  .manager-card {
+    gap: 10px;
+  }
+
+  .manager-card img {
+    max-height: 160px;
+    border-radius: 8px;
+  }
+
+  .manager-form-section {
+    margin-bottom: 10px;
+  }
+
+  .manager-form-section h3 {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .manager-form-section input,
+  .manager-form-section textarea {
+    padding: 9px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  .manager-footer-actions {
+    margin-top: 12px;
+  }
+
+  .manager-footer-actions button {
+    padding: 8px 14px;
+    font-size: 10px;
+    border-radius: 6px;
+    width: 100%;
+  }
 }
 

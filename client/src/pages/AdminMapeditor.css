@@ -136,19 +136,170 @@
   to { stroke-dashoffset: 0; }
 }
 
+@media (max-width: 1200px) {
+  .map-editor-container {
+    height: auto;
+    padding: 16px;
+  }
+
+  .map-sidebar {
+    width: 100%;
+    padding: 18px;
+  }
+
+  .map-editor-wrapper {
+    height: 450px;
+    width: 100%;
+  }
+}
+
 @media (max-width: 968px) {
   .map-editor-container {
     flex-direction: column-reverse;
     height: auto;
-    padding: 10px;
+    padding: 12px;
   }
+
   .map-sidebar {
     width: 100%;
-    padding: 20px;
+    padding: 16px;
+    border-radius: 14px;
   }
+
   .map-editor-wrapper {
     height: 400px;
     width: 100%;
+    border-radius: 14px;
+  }
+
+  .map-sidebar h2 {
+    font-size: 18px;
+  }
+
+  .stall-item {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-editor-container {
+    padding: 10px;
+  }
+
+  .map-sidebar {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .map-sidebar h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .stall-list {
+    gap: 10px;
+  }
+
+  .stall-item {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .stall-item strong {
+    font-size: 12px;
+  }
+
+  .stall-item small {
+    font-size: 10px;
+  }
+
+  .map-editor-wrapper {
+    height: 350px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .map-editor-container {
+    padding: 8px;
+  }
+
+  .map-sidebar {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .map-sidebar h2 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .stall-list {
+    gap: 8px;
+  }
+
+  .stall-item {
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 11px;
+  }
+
+  .stall-item strong {
+    font-size: 11px;
+  }
+
+  .stall-item small {
+    font-size: 9px;
+  }
+
+  .map-editor-wrapper {
+    height: 300px;
+    width: 100%;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-editor-container {
+    padding: 6px;
+  }
+
+  .map-sidebar {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .map-sidebar h2 {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .stall-list {
+    gap: 6px;
+  }
+
+  .stall-item {
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 10px;
+  }
+
+  .stall-item strong {
+    font-size: 10px;
+  }
+
+  .stall-item small {
+    font-size: 8px;
+  }
+
+  .map-editor-wrapper {
+    height: 250px;
+    width: 100%;
+    border-radius: 8px;
   }
 }
 

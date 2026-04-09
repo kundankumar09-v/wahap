@@ -16,6 +16,9 @@ exports.createEvent = async (req, res) => {
       ageLimit,
       language,
       aboutEvent,
+      eventImageUrl,
+      bannerImageUrl,
+      layoutImageUrl,
     } = req.body;
 
     const normalizedType = type?.toLowerCase().trim();
@@ -33,9 +36,9 @@ exports.createEvent = async (req, res) => {
       ageLimit,
       language,
       aboutEvent,
-      eventImage: req.files?.eventImage?.[0]?.path || "uploads/placeholder_event.jpg",
-      bannerImage: req.files?.bannerImage?.[0]?.path || "uploads/placeholder_banner.jpg",
-      layoutImage: req.files?.layoutImage?.[0]?.path || "uploads/placeholder_layout.jpg",
+      eventImage: eventImageUrl || req.files?.eventImage?.[0]?.path || "uploads/placeholder_event.jpg",
+      bannerImage: bannerImageUrl || req.files?.bannerImage?.[0]?.path || "uploads/placeholder_banner.jpg",
+      layoutImage: layoutImageUrl || req.files?.layoutImage?.[0]?.path || "uploads/placeholder_layout.jpg",
     });
 
     await newEvent.save();

@@ -26,6 +26,9 @@ function AdminCreateEvent() {
   const [eventImage, setEventImage] = useState(null);
   const [bannerImage, setBannerImage] = useState(null);
   const [layoutImage, setLayoutImage] = useState(null);
+  const [eventImageUrl, setEventImageUrl] = useState("");
+  const [bannerImageUrl, setBannerImageUrl] = useState("");
+  const [layoutImageUrl, setLayoutImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -45,9 +48,22 @@ function AdminCreateEvent() {
       data.append(key, formData[key]);
     });
 
-    data.append("eventImage", eventImage);
-    data.append("layoutImage", layoutImage);
-    if (bannerImage) {
+    // Use URL if provided, otherwise use file
+    if (eventImageUrl) {
+      data.append("eventImageUrl", eventImageUrl);
+    } else if (eventImage) {
+      data.append("eventImage", eventImage);
+    }
+
+    if (layoutImageUrl) {
+      data.append("layoutImageUrl", layoutImageUrl);
+    } else if (layoutImage) {
+      data.append("layoutImage", layoutImage);
+    }
+
+    if (bannerImageUrl) {
+      data.append("bannerImageUrl", bannerImageUrl);
+    } else if (bannerImage) {
       data.append("bannerImage", bannerImage);
     }
 
@@ -124,30 +140,34 @@ function AdminCreateEvent() {
 
             <div className="form-section full-width">
               <h3><FaImage /> Visual Assets</h3>
+              <p style={{fontSize: '12px', color: '#666', marginBottom: '15px'}}>Upload file OR paste image URL (URL recommended for production)</p>
               <div className="upload-grid">
                 <div className="upload-box">
-                  <span className="label">Event Card*</span>
+                  <span className="label">Event Card Image*</span>
                   <div className="image-preview">
-                    {eventImage ? <img src={URL.createObjectURL(eventImage)} alt="Preview" /> : <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=300" alt="Sample" style={{ opacity: 0.6 }} />}
+                    {eventImage ? <img src={URL.createObjectURL(eventImage)} alt="Preview" /> : eventImageUrl ? <img src={eventImageUrl} alt="Preview" /> : <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=300" alt="Sample" style={{ opacity: 0.6 }} />}
                   </div>
-                  <input type="file" onChange={(e) => setEventImage(e.target.files[0])} />
+                  <input type="file" onChange={(e) => setEventImage(e.target.files[0])} placeholder="Upload or use URL below" />
+                  <input type="text" value={eventImageUrl} onChange={(e) => setEventImageUrl(e.target.value)} placeholder="Or paste image URL" style={{marginTop: '8px', padding: '8px', borderRadius: '4px', border: '1px solid #ddd'}} />
                 </div>
                 <div className="upload-box">
-                  <span className="label">Banner (Slide)</span>
+                  <span className="label">Banner Image</span>
                   <div className="image-preview">
-                    {bannerImage ? <img src={URL.createObjectURL(bannerImage)} alt="Preview" /> : <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=300" alt="Sample" style={{ opacity: 0.6 }} />}
+                    {bannerImage ? <img src={URL.createObjectURL(bannerImage)} alt="Preview" /> : bannerImageUrl ? <img src={bannerImageUrl} alt="Preview" /> : <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=300" alt="Sample" style={{ opacity: 0.6 }} />}
                   </div>
                   <input type="file" onChange={(e) => setBannerImage(e.target.files[0])} />
+                  <input type="text" value={bannerImageUrl} onChange={(e) => setBannerImageUrl(e.target.value)} placeholder="Or paste image URL" style={{marginTop: '8px', padding: '8px', borderRadius: '4px', border: '1px solid #ddd'}} />
                 </div>
                 <div className="upload-box layout">
-                  <span className="label">Venue Layout (Map)*</span>
+                  <span className="label">Venue Layout/Map*</span>
                   <div className="image-preview">
-                    {layoutImage ? <img src={URL.createObjectURL(layoutImage)} alt="Preview" /> : <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=300" alt="Sample" style={{ opacity: 0.6 }} />}
+                    {layoutImage ? <img src={URL.createObjectURL(layoutImage)} alt="Preview" /> : layoutImageUrl ? <img src={layoutImageUrl} alt="Preview" /> : <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=300" alt="Sample" style={{ opacity: 0.6 }} />}
                   </div>
                   <input type="file" onChange={(e) => setLayoutImage(e.target.files[0])} />
+                  <input type="text" value={layoutImageUrl} onChange={(e) => setLayoutImageUrl(e.target.value)} placeholder="Or paste image URL" style={{marginTop: '8px', padding: '8px', borderRadius: '4px', border: '1px solid #ddd'}} />
                 </div>
               </div>
-              <p className="upload-hint">Leave blank to use professional samples for demo</p>
+              <p className="upload-hint">Leave inputs blank to use professional samples</p>
             </div>
           </div>
 

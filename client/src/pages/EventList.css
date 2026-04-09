@@ -95,19 +95,121 @@
 
 /* ====================== RESPONSIVE ====================== */
 @media (max-width: 1024px) {
-  .event-page { padding: 36px 32px; }
+  .event-page {
+    padding: 36px 32px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .event-poster-wrap {
+    height: 280px;
+  }
 }
 
 @media (max-width: 768px) {
-  .event-page { padding: 24px 20px; }
-  .cards { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-  .event-poster-wrap { height: 240px; }
+  .event-page {
+    padding: 24px 20px;
+  }
+
+  .event-page h1 {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .event-poster-wrap {
+    height: 240px;
+    border-radius: 14px;
+  }
+
+  .card-info {
+    padding: 14px;
+  }
+
+  .card-info h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .city {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .event-page {
+    padding: 20px 16px;
+  }
+
+  .event-page h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .event-poster-wrap {
+    height: 220px;
+    border-radius: 12px;
+  }
+
+  .card-info {
+    padding: 12px;
+  }
+
+  .card-info h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .city {
+    font-size: 11px;
+    margin-top: 4px;
+  }
 }
 
 @media (max-width: 480px) {
-  .event-page { padding: 16px; }
-  .cards { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .event-poster-wrap { height: 180px; }
-  .card-info { padding: 12px 14px 16px; }
-  .card-info h4 { font-size: 14px; }
+  .event-page {
+    padding: 16px 12px;
+  }
+
+  .event-page h1 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .event-poster-wrap {
+    height: 180px;
+    border-radius: 10px;
+  }
+
+  .card-info {
+    padding: 10px 12px 12px;
+  }
+
+  .card-info h4 {
+    font-size: 12px;
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+
+  .city {
+    font-size: 10px;
+    margin-top: 3px;
+  }
 }
