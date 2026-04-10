@@ -81,12 +81,12 @@ function buildRoutes(from, to) {
   return (diffX > 1 && diffY > 1) ? [p1, p2] : [p1];
 }
 
-const makeIcon = (stall, visited, active) => {
+const makeIcon = (stall, visited, active, onPath = false) => {
   const c = cfg(stall.type);
   return L.divIcon({
     className: "",
     html: `
-      <div class="vm-marker-wrap ${active ? 'vm-active' : ''}">
+      <div class="vm-marker-wrap ${active ? 'vm-active' : ''} ${onPath ? 'vm-on-path' : ''}">
         <div class="vm-room-label" style="--label-color:${c.labelColor}">
           ${stall.name}
           ${visited ? '<span class="vm-visited-badge">✔</span>' : ""}
@@ -177,11 +177,40 @@ const VenueMap = ({ eventId, fullView = false }) => {
     setFeedback(""); fetchFeedback(stall._id); alert("✅ Marked as visited!");
   };
 
-  const allPaths = routeStart
+  // Show all stalls on the active route path
+  const getStallsOnPath = () => {
+    if (!routeStart || !routeEnd) return [];
+    const snap = [12.5, 37.5, 62.5, 87.5];
+    const near = (v) => snap.reduce((p, c) => Math.abs(c-v) < Math.abs(p-v) ? c : p);
+    
+    const startX = routeStart.x, startY = routeStart.y;
+    const endX = routeEnd.x, endY = routeEnd.y;
+    const midX = near((startX + endX) / 2);
+    const midY = near((startY + endY) / 2);
+    
+    // Get all stalls that are roughly along the path
+    const stallsOnPath = stalls.filter(s => {
+      if (s._id === routeStart._id || s._id === routeEnd._id) return true;
+      
+      // Check if stall is along horizontal journey
+      if (Math.abs(s.y - startY) < 5 && Math.min(startX, endX) - 10 <= s.x && s.x <= Math.max(startX, endX) + 10) return true;
+      
+      // Check if stall is along vertical journey
+      if (Math.abs(s.x - midX) < 5 && Math.min(startY, endY) - 10 <= s.y && s.y <= Math.max(startY, endY) + 10) return true;
+      
+      return false;
+    });
+    
+    return stallsOnPath.map(s => s._id);
+  };
+
+  const stallsOnActivePath = getStallsOnPath();
+
+  const allPaths = routeStart && !routeEnd
     ? stalls.filter(s => s._id !== routeStart._id).flatMap(s =>
         buildRoutes(routeStart, s).map((pts, idx) => ({
           id: `${s._id}-${idx}`, pts, color: cfg(s.type).color,
-          isActive: routeEnd?._id === s._id,
+          isActive: false,
         })))
     : [];
 
@@ -233,8 +262,8 @@ const VenueMap = ({ eventId, fullView = false }) => {
 
         {/* SVG Zone rooms (removed for 3D marker style) */}
 
-        {/* Faint background paths to all stalls using native Polyline */}
-        {allPaths.filter(r => !r.isActive).map(r => (
+        {/* Faint background paths to all stalls - ONLY show when no destination selected */}
+        {!routeEnd && allPaths.map(r => (
           <Polyline key={`fp-${r.id}`} positions={r.pts}
             pathOptions={{
               color: '#ffffff', weight: 3, opacity: 0.35,
@@ -246,27 +275,36 @@ const VenueMap = ({ eventId, fullView = false }) => {
         {/* Active animated route(s) — thick, bright, clearly visible */}
         {activeRoutes.map((pts, idx) => (
           <React.Fragment key={`ar-${idx}`}>
-            {/* Glow underlayer */}
+            {/* Strong glow underlayer - ENHANCED */}
             <Polyline positions={pts}
               pathOptions={{
-                color: idx === 1 ? '#ff9100' : '#FFD600',
-                weight: 16, opacity: 0.12,
+                color: idx === 1 ? '#ff6b00' : '#FFD700',
+                weight: 28, opacity: 0.15,
                 lineCap: 'round', lineJoin: 'round'
               }}
             />
-            {/* Main solid path */}
+            {/* Secondary glow */}
+            <Polyline positions={pts}
+              pathOptions={{
+                color: idx === 1 ? '#ff8533' : '#FFED4E',
+                weight: 20, opacity: 0.25,
+                lineCap: 'round', lineJoin: 'round'
+              }}
+            />
+            {/* Main solid path - THICKER */}
             <Polyline positions={pts}
               pathOptions={{
                 color: '#ffffff',
-                weight: 6, opacity: 0.95,
+                weight: 8, opacity: 1,
                 lineCap: 'round', lineJoin: 'round'
               }}
             />
-            {/* White moving dashes overlay */}
+            {/* Animated dashes overlay */}
             <Polyline positions={pts}
               pathOptions={{
-                color: '#333333', weight: 2, opacity: 0.7,
-                dashArray: '4 12', lineCap: 'round', lineJoin: 'round'
+                color: idx === 1 ? '#ff6b00' : '#FFD700', 
+                weight: 3, opacity: 0.9,
+                dashArray: '6 10', lineCap: 'round', lineJoin: 'round'
               }}
             />
           </React.Fragment>
@@ -274,7 +312,7 @@ const VenueMap = ({ eventId, fullView = false }) => {
 
         {stalls.map((s, i) => (
           <Marker key={i} position={[100-s.y, s.x]}
-            icon={makeIcon(s, visitedIds.includes(s._id), routeEnd?._id===s._id || routeStart?._id===s._id)}
+            icon={makeIcon(s, visitedIds.includes(s._id), routeEnd?._id===s._id || routeStart?._id===s._id, stallsOnActivePath.includes(s._id))}
             eventHandlers={{ click: () => fetchFeedback(s._id) }}>
             <Popup maxWidth={280} minWidth={250} autoPan={true} autoPanPadding={[20, 100]}>
               <div className="vm-popup">
@@ -285,6 +323,7 @@ const VenueMap = ({ eventId, fullView = false }) => {
                     <p className="vm-popup-type" style={{ color: cfg(s.type).color }}>{cfg(s.type).label}</p>
                   </div>
                   {visitedIds.includes(s._id) && <span className="vm-popup-visited-tag">✔ Done</span>}
+                  {stallsOnActivePath.includes(s._id) && routeEnd && <span className="vm-popup-route-tag">📍 On Route</span>}
                 </div>
                 <div className="vm-popup-actions">
                   <div style={{ display:'flex', gap:'6px' }}>

@@ -48,6 +48,12 @@ function EventList() {
     return () => window.removeEventListener("wahap_data_changed", handleDataChanged);
   }, [city, type, search]);
 
+  const formatImageUrl = (path) => {
+    if (!path) return "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=400";
+    if (path.startsWith("http")) return path;
+    return `${API_URL}/${path.replace(/\\/g, "/")}`;
+  };
+
   const formatDate = (startDate, endDate) => {
     if (!startDate) return "TBA";
     const start = new Date(startDate);
@@ -114,7 +120,7 @@ function EventList() {
           >
             <div className="event-poster-wrap">
               <img
-                src={`${API_URL}/${event.eventImage?.replace(/\\/g, "/")}`}
+                src={formatImageUrl(event.eventImage || event.bannerImage)}
                 alt={event.name}
                 className="card-img"
               />

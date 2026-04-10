@@ -617,3 +617,51 @@
 .vm-textarea::placeholder { color: #aaa; }
 .vm-btn-submit { background: #00B894; color: white; margin-top: 4px; }
 .vm-btn-submit:hover { background: #00A8FF; box-shadow: 0 4px 12px rgba(0, 184, 148, 0.4); }
+
+/* Stalls on Active Route - Highlight */
+.vm-on-path .vm-iso-building {
+  animation: vm-route-pulse 2s ease-in-out infinite;
+  box-shadow: -15px 15px 25px rgba(180, 50, 40, 0.4), 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+@keyframes vm-route-pulse {
+  0%, 100% {
+    transform: rotateX(60deg) rotateZ(-45deg) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: rotateX(60deg) rotateZ(-45deg) scale(1.1);
+    filter: brightness(1.15);
+  }
+}
+
+.vm-on-path .vm-room-label {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #333333;
+  font-weight: 900;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 2px 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Route Tag in Popup */
+.vm-popup-route-tag {
+  position: absolute; top: 12px; right: 50px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #333333; border-radius: 20px;
+  padding: 4px 12px; font-size: 10px; font-weight: 900;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+@media (max-width: 600px) {
+  .vm-on-path .vm-room-label {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+  
+  .vm-popup-route-tag {
+    top: 8px;
+    right: 45px;
+    font-size: 9px;
+    padding: 3px 10px;
+  }
+}
+
